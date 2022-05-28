@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className="">
+    <div className="flex flex-col justify-center">
       <header className="bg-[#F9F9FB] px-6 pt-12 pb-8">
         <div className="items-top flex justify-between">
           <div className="">

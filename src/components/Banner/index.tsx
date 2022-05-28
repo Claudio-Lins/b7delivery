@@ -7,9 +7,10 @@ import Image from 'next/image'
 export function Banner() {
   return (
     <>
-      <div className="m-6">
+      <div className="mx-6">
         <Swiper
           slidesPerView={1}
+          style={{ margin: '0 auto' }}
           loop={true}
           autoplay={{
             delay: 2000,
@@ -18,7 +19,7 @@ export function Banner() {
           modules={[Autoplay]}
         >
           <SwiperSlide>
-            <div className="">
+            <div className="flex justify-center">
               <img
                 src="/banners/banner1.png"
                 width={380}
@@ -28,7 +29,7 @@ export function Banner() {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-          <div className="">
+          <div className="flex justify-center">
               <img
                 src="/banners/banner2.png"
                 width={380}

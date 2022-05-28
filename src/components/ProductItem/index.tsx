@@ -5,7 +5,7 @@ export function ProductItem() {
     <div className="overflow-hidden rounded-lg bg-white shadow-md">
       <div className="h-[90px] w-full bg-yellow-100"></div>
       <div className="p-4">
-        <div className="mx-auto w-full">
+        <div className="flex justify-center w-full">
           <img className="-mt-20" src="/productItem/burger.png" alt="burger" />
         </div>
         <div className="text-[8px] font-medium mt-2">Tadicional</div>
