@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { IoMdMenu } from 'react-icons/io'
+import { Banner } from '../../Banner'
 import { SearchInput } from '../../components/SearchInput'
 
 const Home: NextPage = () => {
@@ -32,7 +33,9 @@ const Home: NextPage = () => {
              mainColor="#FB9400" />
         </div>
       </header>
+      <Banner />
     </div>
+
   )
 }
 
