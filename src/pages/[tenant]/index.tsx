@@ -2,11 +2,11 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { IoMdMenu } from 'react-icons/io'
-import { Banner } from '../../Banner'
+import { Banner } from '../../components/Banner'
+import { ProductItem } from '../../components/ProductItem'
 import { SearchInput } from '../../components/SearchInput'
 
 const Home: NextPage = () => {
-
   const handleSearch = (searchValue: string) => {
     console.log(`Busca por ${searchValue}`)
   }
@@ -28,14 +28,19 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div className="">
-          <SearchInput 
-            onSearch={handleSearch}
-             mainColor="#FB9400" />
+          <SearchInput onSearch={handleSearch} mainColor="#FB9400" />
         </div>
       </header>
       <Banner />
+      <div className="m-6 grid grid-cols-2 gap-6">
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+      </div>
     </div>
-
   )
 }
 
