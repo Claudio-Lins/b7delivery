@@ -1,6 +1,4 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
 import { IoMdMenu } from 'react-icons/io'
 import { Banner } from '../../components/Banner'
 import { ProductItem } from '../../components/ProductItem'
@@ -33,12 +31,28 @@ const Home: NextPage = () => {
       </header>
       <Banner />
       <div className="m-6 grid grid-cols-2 gap-6">
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
+        <ProductItem
+          data={{
+            id: 1,
+            image: '/productItem/burger.png',
+            category: 'Tradicional',
+            name: 'Texas Burger',
+            price: '€15,00',
+          }}
+          mainColor={'#FB9400'}
+          secondaryColor={'#fff9f2'}
+        />
+        <ProductItem
+          data={{
+            id: 2,
+            image: '/productItem/burger.png',
+            category: 'Especial',
+            name: 'Tamandaré Burger',
+            price: '€55,00',
+          }}
+          mainColor={'#FB9400'}
+          secondaryColor={'#fff9f2'}
+        />
       </div>
     </div>
   )

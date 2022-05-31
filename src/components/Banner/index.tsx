@@ -13,7 +13,7 @@ export function Banner() {
           style={{ margin: '0 auto' }}
           loop={true}
           autoplay={{
-            delay: 2000,
+            delay: 2500,
             disableOnInteraction: false
           }}
           modules={[Autoplay]}
