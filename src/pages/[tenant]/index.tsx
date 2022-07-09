@@ -1,10 +1,22 @@
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
+import { type } from 'os'
+import { useEffect } from 'react'
 import { IoMdMenu } from 'react-icons/io'
+import { useAppContext } from '../../../contexts/AppContext'
+import { useApi } from '../../../libs/useApi'
+import { Tenant } from '../../../types/Tenant'
 import { Banner } from '../../components/Banner'
 import { ProductItem } from '../../components/ProductItem'
 import { SearchInput } from '../../components/SearchInput'
 
-const Home: NextPage = () => {
+const Home = (data: Props) => {
+
+  const { tenant, setTenant } = useAppContext()
+
+  useEffect(() => {
+    setTenant(data.tenant)
+  }, [])
+
   const handleSearch = (searchValue: string) => {
     console.log(`Busca por ${searchValue}`)
   }
@@ -22,11 +34,11 @@ const Home: NextPage = () => {
             </div>
           </div>
           <div className="">
-            <IoMdMenu size={30} color="#FB9400" />
+            <IoMdMenu size={30} color={data.tenant.primaryColor} />
           </div>
         </div>
         <div className="">
-          <SearchInput onSearch={handleSearch} mainColor="#FB9400" />
+          <SearchInput onSearch={handleSearch}/>
         </div>
       </header>
       <Banner />
@@ -39,8 +51,6 @@ const Home: NextPage = () => {
             name: 'Texas Burger',
             price: '€15,00',
           }}
-          mainColor={'#FB9400'}
-          secondaryColor={'#fff9f2'}
         />
         <ProductItem
           data={{
@@ -50,8 +60,15 @@ const Home: NextPage = () => {
             name: 'Tamandaré Burger',
             price: '€55,00',
           }}
-          mainColor={'#FB9400'}
-          secondaryColor={'#fff9f2'}
+        />
+        <ProductItem
+          data={{
+            id: 2,
+            image: '/productItem/burger.png',
+            category: 'Especial',
+            name: 'Lisboa Burger',
+            price: '€55,00',
+          }}
         />
       </div>
     </div>
@@ -59,3 +76,27 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+type Props = {
+  tenant: Tenant
+}
+
+export const getServerSideProps: GetServerSideProps = async (constext) => {
+  const { tenant: tenantSlug } = constext.query
+  const api = useApi()
+
+  const tenant = await api.getTenant(tenantSlug as string)
+  if (!tenant) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+  return {
+    props: {
+      tenant,
+    },
+  }
+}
