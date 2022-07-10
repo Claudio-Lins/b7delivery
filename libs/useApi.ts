@@ -8,7 +8,7 @@ export const useApi = () => ({
         return {
           slug: 'b7burger',
           name: 'B7Burger',
-          primaryColor: '#ff0000',
+          primaryColor: '#0000ff',
           secondaryColor: '#ffff00',
         }
         break
