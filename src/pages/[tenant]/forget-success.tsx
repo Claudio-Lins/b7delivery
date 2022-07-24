@@ -2,6 +2,7 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { EnvelopeOpen } from 'phosphor-react'
+
 import { useEffect } from 'react'
 import { useAppContext } from '../../../contexts/AppContext'
 import { useApi } from '../../../libs/useApi'
@@ -9,7 +10,6 @@ import styles from '../../../styles/ForgetSuccess.module.css'
 import { Tenant } from '../../../types/Tenant'
 import { Header } from '../../components'
 import { Button } from '../../components/Button'
-import Icon from '../../components/Icon'
 
 export default function ForgetSuccess(data: Props) {
   const { tenant, setTenant } = useAppContext()
@@ -20,7 +20,7 @@ export default function ForgetSuccess(data: Props) {
   }, [])
 
   async function handleSubmit() {
-    router.push(`${data.tenant.slug}/login`)
+    router.push(`/${data.tenant.slug}/login`)
   }
 
   return (
@@ -35,11 +35,16 @@ export default function ForgetSuccess(data: Props) {
 
       <div
         className={`
-      flex justify-center mt-24 mb-14
+      mt-24  flex justify-center
       ${styles.iconArea}
-    `}>
-      <EnvelopeOpen size={120} color={data.tenant.primaryColor} weight="fill" />
-    </div>
+    `}
+      >
+        <EnvelopeOpen
+          size={120}
+          color={data.tenant.primaryColor}
+          weight="fill"
+        />
+      </div>
 
       <div
         className={`
@@ -66,7 +71,7 @@ export default function ForgetSuccess(data: Props) {
 
       <div
         className={`
-          mt-14
+          mt-8
         ${styles.formArea}
     `}
       >
