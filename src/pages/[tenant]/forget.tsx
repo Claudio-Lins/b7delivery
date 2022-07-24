@@ -1,17 +1,16 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
-import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import { useAppContext } from '../../../contexts/AppContext'
 import { useApi } from '../../../libs/useApi'
+import styles from '../../../styles/Forget.module.css'
 import { Tenant } from '../../../types/Tenant'
 import { Header } from '../../components'
 import { Button } from '../../components/Button'
 import { InputField } from '../../components/InputField'
-import styles from '../../../styles/Login.module.css'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
 
-export default function Login(data: Props) {
+export default function Forget(data: Props) {
   const { tenant, setTenant } = useAppContext()
   const router = useRouter()
 
@@ -20,20 +19,18 @@ export default function Login(data: Props) {
   }, [])
 
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
 
-  async function handleSubmit() {}
-  async function handleSignUp() {
-    router.push(`/${data.tenant.slug}/signup`)
+  async function handleSubmit() {
+    router.push(`/${data.tenant.slug}/forget-success`)
   }
 
   return (
     <div className="bg-white px-6 py-12">
       <Head>
-        <title>Login | {data.tenant.name}</title>
+        <title>Esqueci a senha | {data.tenant.name}</title>
       </Head>
       <Header
-        backHref={`/${data.tenant.slug}`}
+        backHref={`/${data.tenant.slug}/login`}
         color={data.tenant.primaryColor}
       />
 
@@ -48,14 +45,26 @@ export default function Login(data: Props) {
 
       <div
         className={`
-      relative mx-auto w-56 border-b-[1.5px] pb-10 text-center text-lg font-normal leading-[21px] text-[#bbb]
+      relative mx-auto w-fit mb-6 text-center text-2xl font-bold
+      ${styles.title}
+    `}
+        style={{
+          borderBottomColor: `${data.tenant.primaryColor}`,
+        }}
+      >
+        Esqueceu sua senha?
+      </div>
+      <div
+        className={`
+      relative mx-auto w-[85%] border-b-[1.5px] pb-10 text-center text-lg font-normal leading-[21px] text-[#bbb]
       ${styles.subtitle}
     `}
-    style={{
-      borderBottomColor: `${data.tenant.primaryColor}`
-    }}
+        style={{
+          borderBottomColor: `${data.tenant.primaryColor}`,
+        }}
       >
-        Use suas crednciais para realizar o login
+        Preencha o campo com seu email e recebaas instruções necessárias para
+        redefinir a sua senha.
       </div>
       <div
         className={`
@@ -86,23 +95,7 @@ export default function Login(data: Props) {
             onChange={setEmail}
           />
         </div>
-        <div
-          className={`
-          
-        ${styles.inputArea}
-    `}
-        >
-          <InputField
-            className={`
-          flex-1 bg-transparent outline-none
-        `}
-            color={data.tenant.primaryColor}
-            placeholder="Digite seu Password"
-            value={password}
-            onChange={setPassword}
-            password
-          />
-        </div>
+
         <div
           className={`
           
@@ -111,52 +104,11 @@ export default function Login(data: Props) {
         >
           <Button
             color={data.tenant.primaryColor}
-            label="Login"
+            label="Enviar"
             onClick={handleSubmit}
             fill
           />
         </div>
-      </div>
-      <div
-        className={`
-          relative mx-auto w-fit border-b-[1.5px] pb-16 text-center
-        ${styles.forgetArea}
-    `}
-    style={{
-      borderBottomColor: `${data.tenant.primaryColor}`
-    }}
-      >
-        Esqueceu sua senha? 
-        <Link href={`/${data.tenant.slug}/forget`}>
-          <a 
-            className="font-semibold ml-2"
-            style={{
-              color: data.tenant.primaryColor
-            }}
-            >
-              
-                Clique aqui
-          </a>
-        </Link>
-      </div>
-      <div
-        className={`
-       -mt-[1.5px] border-t-[1.5px]
-      ${styles.line}
-    `}
-      />
-
-      <div
-        className={`
-          mt-16
-        ${styles.signUpArea}
-    `}
-      >
-        <Button
-          color={data.tenant.primaryColor}
-          label="Quero me cadastrar"
-          onClick={handleSignUp}
-        />
       </div>
     </div>
   )

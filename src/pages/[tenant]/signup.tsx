@@ -7,11 +7,11 @@ import { Tenant } from '../../../types/Tenant'
 import { Header } from '../../components'
 import { Button } from '../../components/Button'
 import { InputField } from '../../components/InputField'
-import styles from '../../../styles/Login.module.css'
+import styles from '../../../styles/Signup.module.css'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-export default function Login(data: Props) {
+export default function Signup(data: Props) {
   const { tenant, setTenant } = useAppContext()
   const router = useRouter()
 
@@ -19,6 +19,7 @@ export default function Login(data: Props) {
     setTenant(data.tenant)
   }, [])
 
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -30,10 +31,10 @@ export default function Login(data: Props) {
   return (
     <div className="bg-white px-6 py-12">
       <Head>
-        <title>Login | {data.tenant.name}</title>
+        <title>Cadastro | {data.tenant.name}</title>
       </Head>
       <Header
-        backHref={`/${data.tenant.slug}`}
+        backHref={`/${data.tenant.slug}/login`}
         color={data.tenant.primaryColor}
       />
 
@@ -51,11 +52,11 @@ export default function Login(data: Props) {
       relative mx-auto w-56 border-b-[1.5px] pb-10 text-center text-lg font-normal leading-[21px] text-[#bbb]
       ${styles.subtitle}
     `}
-    style={{
-      borderBottomColor: `${data.tenant.primaryColor}`
-    }}
+        style={{
+          borderBottomColor: `${data.tenant.primaryColor}`,
+        }}
       >
-        Use suas crednciais para realizar o login
+        Preencha os campos para criar seu cadastro.
       </div>
       <div
         className={`
@@ -70,6 +71,22 @@ export default function Login(data: Props) {
         ${styles.formArea}
     `}
       >
+        <div
+          className={`
+          
+        ${styles.inputArea}
+    `}
+        >
+          <InputField
+            className={`
+          flex-1 bg-transparent outline-none
+        `}
+            color={data.tenant.primaryColor}
+            placeholder="Digite seu nome"
+            value={name}
+            onChange={setName}
+          />
+        </div>
         <div
           className={`
           
@@ -111,7 +128,7 @@ export default function Login(data: Props) {
         >
           <Button
             color={data.tenant.primaryColor}
-            label="Login"
+            label="Cadastrar"
             onClick={handleSubmit}
             fill
           />
@@ -119,44 +136,24 @@ export default function Login(data: Props) {
       </div>
       <div
         className={`
-          relative mx-auto w-fit border-b-[1.5px] pb-16 text-center
+          relative mx-auto w-fit text-center
         ${styles.forgetArea}
     `}
-    style={{
-      borderBottomColor: `${data.tenant.primaryColor}`
-    }}
+        style={{
+          borderBottomColor: `${data.tenant.primaryColor}`,
+        }}
       >
-        Esqueceu sua senha? 
-        <Link href={`/${data.tenant.slug}/forget`}>
-          <a 
-            className="font-semibold ml-2"
+        Já tem cadastro?
+        <Link href={`/${data.tenant.slug}/login`}>
+          <a
+            className="ml-2 font-semibold"
             style={{
-              color: data.tenant.primaryColor
+              color: data.tenant.primaryColor,
             }}
-            >
-              
-                Clique aqui
+          >
+            Fazer login
           </a>
         </Link>
-      </div>
-      <div
-        className={`
-       -mt-[1.5px] border-t-[1.5px]
-      ${styles.line}
-    `}
-      />
-
-      <div
-        className={`
-          mt-16
-        ${styles.signUpArea}
-    `}
-      >
-        <Button
-          color={data.tenant.primaryColor}
-          label="Quero me cadastrar"
-          onClick={handleSignUp}
-        />
       </div>
     </div>
   )
@@ -170,7 +167,7 @@ export const getServerSideProps: GetServerSideProps = async (constext) => {
   const { tenant: tenantSlug } = constext.query
   const api = useApi()
 
-  const tenant = await api.getTenant(tenantSlug as string)
+  const tenant = api.getTenant(tenantSlug as string)
   if (!tenant) {
     return {
       redirect: {
