@@ -107,10 +107,11 @@ const Product = (data: Props) => {
               onUpdateCount={handleUpdateQt}
               min={1}
               // max={11}
+              // small
             />
           </div>
           <div
-            className="flex-1 text-right text-4xl font-semibold"
+            className="flex-1 text-right text-4xl font-semibold tracking-tighter"
             style={{ color: data.tenant.primaryColor }}
           >
             {formatter.formatPrice(data.product.price)}

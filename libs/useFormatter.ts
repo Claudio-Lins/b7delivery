@@ -8,7 +8,7 @@ export const useFormatter = () => ({
   },
   formatQauntity: (qt: number, minDigits: number) => {
     if (qt.toString().length >= minDigits) {
-      return qt
+      return qt.toString()
     }
     const remain = minDigits - qt.toString().length
     return `${'0'.repeat(remain)}${qt}`

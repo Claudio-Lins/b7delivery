@@ -9,6 +9,7 @@ interface QuantityProps {
   onUpdateCount: (newCount: number) => void
   min?: number
   max?: number
+  small?: boolean
 }
 
 export function Quantity({
@@ -17,6 +18,7 @@ export function Quantity({
   onUpdateCount,
   min,
   max,
+  small
 }: QuantityProps) {
   const formatter = useFormatter()
   const [canRemove, setCanRemove] = useState(false)
@@ -41,21 +43,32 @@ export function Quantity({
   return (
     <div className="flex items-center divide-x-[1px] overflow-hidden rounded-md border">
       <div
-        className="py-2 px-4 text-center text-2xl font-medium"
+        className="text-center text-2xl font-medium leading-10"
         style={{
           color: canRemove ? "#fff" : "#96A3AB",
-          backgroundColor: canRemove ? color : '#F2F4F5'
+          backgroundColor: canRemove ? color : '#F2F4F5',
+          width: small ? 42 : 48,
+          height: small ? 42 : 48,
         }}
         onClick={handleRemove}
       >
         -
       </div>
-      <div className="py-2 text-lg text-center font-bold w-12">{formatter.formatQauntity(count, 2)}</div>
+      <div 
+      className="py-2 text-center font-bold leading-8"
+      style={{
+        fontSize: small ? 16 : 18,
+        width: small ? 42 : 48,
+        height: small ? 42 : 48,
+      }}
+      >{formatter.formatQauntity(count, 2)}</div>
       <div
-        className="py-2 px-4 text-center text-2xl font-medium"
+        className="text-center text-2xl font-medium leading-10"
         style={{
           color: canAdd ? "#fff" : "#96A3AB",
-          backgroundColor: canAdd ? color : '#F2F4F5'
+          backgroundColor: canAdd ? color : '#F2F4F5',
+          width: small ? 42 : 48,
+          height: small ? 42 : 48,
         }}
         onClick={handleAdd}
       >
