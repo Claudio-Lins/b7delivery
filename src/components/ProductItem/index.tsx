@@ -2,6 +2,7 @@ import React from 'react'
 import { Product } from '../../../types/Product'
 import Link from 'next/link'
 import { useAppContext } from '../../../contexts/AppContext'
+import { useFormatter } from '../../../libs/useFormatter'
 
 type ProductItemProps = {
   data: Product
@@ -9,8 +10,9 @@ type ProductItemProps = {
 
 export function ProductItem({ data }: ProductItemProps) {
   const { tenant } = useAppContext()
+  const formatter = useFormatter()
   return (
-    <Link href={`/${tenant?.slug}/products/${data.id}`}>
+    <Link href={`/${tenant?.slug}/product/${data.id}`}>
       <a className="overflow-hidden rounded-lg bg-white shadow-md">
         <div
           className={`h-[90px] w-full`}
@@ -27,7 +29,7 @@ export function ProductItem({ data }: ProductItemProps) {
               className={`text-base font-semibold`}
               style={{ color: tenant?.primaryColor }}
             >
-              {data.price}
+              {formatter.formatPrice(data.price)}
             </div>
           </div>
         </div>

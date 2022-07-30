@@ -1,9 +1,10 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { type } from 'os'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { IoMdMenu } from 'react-icons/io'
 import { useAppContext } from '../../../contexts/AppContext'
 import { useApi } from '../../../libs/useApi'
+import { Product } from '../../../types/Product'
 import { Tenant } from '../../../types/Tenant'
 import { Banner } from '../../components/Banner'
 import { ProductItem } from '../../components/ProductItem'
@@ -12,6 +13,7 @@ import { SearchInput } from '../../components/SearchInput'
 const Home = (data: Props) => {
 
   const { tenant, setTenant } = useAppContext()
+  const [products, setProducts] = useState<Product[]>(data.products)
 
   useEffect(() => {
     setTenant(data.tenant)
@@ -43,33 +45,12 @@ const Home = (data: Props) => {
       </header>
       <Banner />
       <div className="m-6 grid grid-cols-2 gap-6">
-        <ProductItem
-          data={{
-            id: 1,
-            image: '/productItem/burger.png',
-            category: 'Tradicional',
-            name: 'Texas Burger',
-            price: '€15,00',
-          }}
-        />
-        <ProductItem
-          data={{
-            id: 2,
-            image: '/productItem/burger.png',
-            category: 'Especial',
-            name: 'Tamandaré Burger',
-            price: '€55,00',
-          }}
-        />
-        <ProductItem
-          data={{
-            id: 2,
-            image: '/productItem/burger.png',
-            category: 'Especial',
-            name: 'Lisboa Burger',
-            price: '€55,00',
-          }}
-        />
+        {products.map((product, index) => (
+          <ProductItem
+          key={index}
+          data={product}
+          />
+        ))}
       </div>
     </div>
   )
@@ -79,13 +60,15 @@ export default Home
 
 type Props = {
   tenant: Tenant
+  products: Product[]
 }
 
 export const getServerSideProps: GetServerSideProps = async (constext) => {
   const { tenant: tenantSlug } = constext.query
-  const api = useApi()
+  const api = useApi(tenantSlug as string)
 
-  const tenant = await api.getTenant(tenantSlug as string)
+  // GET TENANT
+  const tenant = await api.getTenant()
   if (!tenant) {
     return {
       redirect: {
@@ -94,9 +77,14 @@ export const getServerSideProps: GetServerSideProps = async (constext) => {
       },
     }
   }
+
+  // GET PRODUCTS
+  const products = await api.getAllProducts()
+
   return {
     props: {
       tenant,
+      products
     },
   }
 }

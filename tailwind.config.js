@@ -14,6 +14,9 @@ module.exports = {
           500: '#8257e6',
         }
       },
+      backgroundImage: {
+        'bg-efeito': "url('/assets/bg-efeito.png')"
+      }
     },
   },
   plugins: [],
