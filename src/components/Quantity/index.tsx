@@ -47,8 +47,8 @@ export function Quantity({
         style={{
           color: canRemove ? "#fff" : "#96A3AB",
           backgroundColor: canRemove ? color : '#F2F4F5',
-          width: small ? 42 : 48,
-          height: small ? 42 : 48,
+          width: small ? 36 : 40,
+          height: small ? 36 : 40,
         }}
         onClick={handleRemove}
       >
@@ -58,8 +58,8 @@ export function Quantity({
       className="py-2 text-center font-bold leading-8"
       style={{
         fontSize: small ? 16 : 18,
-        width: small ? 42 : 48,
-        height: small ? 42 : 48,
+        width: small ? 36 : 40,
+        height: small ? 36 : 40,
       }}
       >{formatter.formatQauntity(count, 2)}</div>
       <div
@@ -67,8 +67,8 @@ export function Quantity({
         style={{
           color: canAdd ? "#fff" : "#96A3AB",
           backgroundColor: canAdd ? color : '#F2F4F5',
-          width: small ? 42 : 48,
-          height: small ? 42 : 48,
+          width: small ? 36 : 40,
+          height: small ? 36 : 40,
         }}
         onClick={handleAdd}
       >
