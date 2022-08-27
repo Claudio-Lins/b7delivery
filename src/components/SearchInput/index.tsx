@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ImSearch } from 'react-icons/im'
-import { useAppContext } from '../../../contexts/AppContext'
+import { useAppContext } from '../../../contexts/app'
 
 interface SearchInputProps {
   onSearch: (searchValue: string) => void

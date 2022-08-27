@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { EnvelopeOpen } from 'phosphor-react'
 
 import { useEffect } from 'react'
-import { useAppContext } from '../../../contexts/AppContext'
+import { useAppContext } from '../../../contexts/app'
 import { useApi } from '../../../libs/useApi'
 import styles from '../../../styles/ForgetSuccess.module.css'
 import { Tenant } from '../../../types/Tenant'
@@ -99,6 +99,7 @@ type Props = {
 
 export const getServerSideProps: GetServerSideProps = async (constext) => {
   const { tenant: tenantSlug } = constext.query
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const api = useApi(tenantSlug as string)
 
   const tenant = await api.getTenant()

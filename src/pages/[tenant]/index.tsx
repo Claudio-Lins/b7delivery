@@ -2,7 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next'
 import { type } from 'os'
 import { useEffect, useState } from 'react'
 import { IoMdMenu } from 'react-icons/io'
-import { useAppContext } from '../../../contexts/AppContext'
+import {  useAppContext } from '../../../contexts/app'
 import { useApi } from '../../../libs/useApi'
 import { Product } from '../../../types/Product'
 import { Tenant } from '../../../types/Tenant'
@@ -65,6 +65,7 @@ type Props = {
 
 export const getServerSideProps: GetServerSideProps = async (constext) => {
   const { tenant: tenantSlug } = constext.query
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const api = useApi(tenantSlug as string)
 
   // GET TENANT
