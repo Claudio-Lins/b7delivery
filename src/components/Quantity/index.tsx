@@ -41,7 +41,7 @@ export function Quantity({
     }
   }
   return (
-    <div className="flex items-center divide-x-[1px] overflow-hidden rounded-md border">
+    <div className="flex divide-x-[1px] overflow-hidden rounded-md border">
       <div
         className="text-center text-2xl font-medium leading-10"
         style={{
@@ -55,7 +55,7 @@ export function Quantity({
         -
       </div>
       <div 
-      className="py-2 text-center font-bold leading-8"
+      className="py-2 flex justify-center items-center text-center font-bold leading-8"
       style={{
         fontSize: small ? 16 : 18,
         width: small ? 36 : 40,

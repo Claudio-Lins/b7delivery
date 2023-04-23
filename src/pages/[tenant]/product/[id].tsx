@@ -107,7 +107,7 @@ const Product = (data: Props) => {
               onUpdateCount={handleUpdateQt}
               min={1}
               // max={11}
-              // small
+              small
             />
           </div>
           <div
