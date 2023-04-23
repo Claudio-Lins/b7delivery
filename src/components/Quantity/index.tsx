@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFormatter } from '../../../libs/useFormatter'
 
 import styles from './styles.module.css'
@@ -43,7 +43,7 @@ export function Quantity({
   return (
     <div className="flex divide-x-[1px] overflow-hidden rounded-md border">
       <div
-        className="text-center text-2xl font-medium leading-10"
+        className="text-center flex justify-center items-center text-2xl font-medium leading-10"
         style={{
           color: canRemove ? "#fff" : "#96A3AB",
           backgroundColor: canRemove ? color : '#F2F4F5',
@@ -63,7 +63,7 @@ export function Quantity({
       }}
       >{formatter.formatQauntity(count, 2)}</div>
       <div
-        className="text-center text-2xl font-medium leading-10"
+        className="text-center flex justify-center items-center text-2xl font-medium leading-10"
         style={{
           color: canAdd ? "#fff" : "#96A3AB",
           backgroundColor: canAdd ? color : '#F2F4F5',

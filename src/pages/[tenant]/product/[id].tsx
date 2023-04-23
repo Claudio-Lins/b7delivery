@@ -10,7 +10,6 @@ import { Tenant } from '../../../../types/Tenant'
 import { Header } from '../../../components'
 import { Button } from '../../../components/Button'
 import { Quantity } from '../../../components/Quantity'
-import handler from '../../api/hello'
 import styles from './styles.module.css'
 
 const Product = (data: Props) => {
@@ -20,7 +19,7 @@ const Product = (data: Props) => {
 
   useEffect(() => {
     setTenant(data.tenant)
-  }, [])
+  }, [data.tenant, setTenant])
 
   async function handleAddToCart() {}
   async function handleUpdateQt(newCount: number) {
