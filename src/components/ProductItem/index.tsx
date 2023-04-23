@@ -23,7 +23,7 @@ export function ProductItem({ data }: ProductItemProps) {
       ></div>
       <div className="flex flex-col justify-between p-4">
         <div className="flex w-full justify-center">
-          <Image className="-mt-20" src={data.image} alt="burger" />
+          <Image className="-mt-20" src={data.image} alt="burger" width={106} height={120} />
         </div>
         <span className="mt-2 text-[8px] font-medium">{data.category}</span>
         <div className="flex h-16 flex-col justify-between">

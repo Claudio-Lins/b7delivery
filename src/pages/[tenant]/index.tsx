@@ -9,15 +9,16 @@ import { Tenant } from '../../../types/Tenant'
 import { Banner } from '../../components/Banner'
 import { ProductItem } from '../../components/ProductItem'
 import { SearchInput } from '../../components/SearchInput'
+import { Sidebar } from '../../components/Sidebar'
 
 const Home = (data: Props) => {
-
   const { tenant, setTenant } = useAppContext()
   const [products, setProducts] = useState<Product[]>(data.products)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useEffect(() => {
     setTenant(data.tenant)
-  }, [])
+  }, [data.tenant, setTenant])
 
   const handleSearch = (searchValue: string) => {
     console.log(`Busca por ${searchValue}`)
@@ -35,9 +36,19 @@ const Home = (data: Props) => {
               O que deseja para hoje?
             </div>
           </div>
-          <div className="">
-            <IoMdMenu size={30} color={data.tenant.primaryColor} />
+          <div
+            
+            className="cursor-pointer">
+            <IoMdMenu 
+              onClick={() => setSidebarOpen(true)} 
+              size={30} color={data.tenant.primaryColor} 
+            />
           </div>
+          <Sidebar 
+            tenant={data.tenant}
+            open={sidebarOpen}
+            onClose={() => setSidebarOpen(false)}
+          />
         </div>
         <div className="">
           <SearchInput onSearch={handleSearch}/>

@@ -12,7 +12,7 @@ interface ButtonProps {
 export function Button({ color, label, onClick, fill}: ButtonProps) {
   return (
     <div 
-      className='flex justify-center items-center border py-6 font-semibold rounded'
+      className='flex justify-center items-center border p-6 font-semibold rounded'
       onClick={onClick} 
       style={{
         color: fill ? '#FFF' : color,
