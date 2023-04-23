@@ -1,8 +1,6 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft } from 'phosphor-react'
 
-import styles from './styles.module.css'
 
 type Props = {
   backHref: string
@@ -16,14 +14,18 @@ export function Header({ backHref, color, title, subtitle, invert }: Props) {
   return (
     <div className="flex h-12">
       <div className="flex h-12 items-center justify-center">
-        <Link href={backHref}>
-          <a
-            className={`
+        <Link
+          href={backHref}
+          className={`
               p-2
-              ${invert ? 'rounded-md bg-black bg-opacity-10 hover:shadow-md' : ''}
-            `}>
-            <ArrowLeft size={28} color={invert ? '#FFF' : color} />
-          </a>
+              ${
+                invert
+                  ? 'rounded-md bg-black bg-opacity-10 hover:shadow-md'
+                  : ''
+              }
+            `}
+        >
+          <ArrowLeft size={28} color={invert ? '#FFF' : color} />
         </Link>
       </div>
       <div className="flex flex-1 flex-col items-center justify-center">

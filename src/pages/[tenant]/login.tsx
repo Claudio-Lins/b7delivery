@@ -17,7 +17,7 @@ export default function Login(data: Props) {
 
   useEffect(() => {
     setTenant(data.tenant)
-  }, [])
+  }, [data.tenant, setTenant])
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -127,8 +127,7 @@ export default function Login(data: Props) {
     }}
       >
         Esqueceu sua senha? 
-        <Link href={`/${data.tenant.slug}/forget`}>
-          <a 
+        <Link href={`/${data.tenant.slug}/forget`}
             className="font-semibold ml-2"
             style={{
               color: data.tenant.primaryColor
@@ -136,7 +135,6 @@ export default function Login(data: Props) {
             >
               
                 Clique aqui
-          </a>
         </Link>
       </div>
       <div

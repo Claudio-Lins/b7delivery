@@ -17,7 +17,7 @@ export default function Signup(data: Props) {
 
   useEffect(() => {
     setTenant(data.tenant)
-  }, [])
+  }, [data.tenant, setTenant])
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -144,15 +144,13 @@ export default function Signup(data: Props) {
         }}
       >
         Já tem cadastro?
-        <Link href={`/${data.tenant.slug}/login`}>
-          <a
+        <Link href={`/${data.tenant.slug}/login`}
             className="ml-2 font-semibold"
             style={{
               color: data.tenant.primaryColor,
             }}
           >
             Fazer login
-          </a>
         </Link>
       </div>
     </div>

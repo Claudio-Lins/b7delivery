@@ -7,10 +7,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "latest",
+    "@next/font": "^13.3.1",
+    "next": "^13.3.1",
     "phosphor-react": "^1.4.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^4.3.1",
     "swiper": "^8.1.6"
   },
@@ -19,7 +20,7 @@
     "@types/react": "17.0.38",
     "autoprefixer": "^10.4.0",
     "eslint": "8.20.0",
-    "eslint-config-next": "12.2.3",
+    "eslint-config-next": "^13.3.1",
     "postcss": "^8.4.5",
     "prettier": "^2.5.1",
     "prettier-plugin-tailwindcss": "^0.1.1",
