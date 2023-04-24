@@ -1,10 +1,11 @@
+'use client'
 import React from 'react'
 import { X } from 'lucide-react'
 import { useAuthContext } from '../../../contexts/auth'
 import { Button } from '../Button'
 import { Tenant } from '../../../types/Tenant'
 import { MenuItem } from './MenuItem'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 interface SidebarProps {
   tenant: Tenant

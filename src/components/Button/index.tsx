@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 interface ButtonProps {
   color: string;
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
   fill?: boolean
 }
 
