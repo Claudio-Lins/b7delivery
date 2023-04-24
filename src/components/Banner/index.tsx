@@ -7,7 +7,7 @@ import Image from 'next/image'
 export function Banner() {
   return (
     <>
-      <div className="mx-6">
+      <div className="mx-6 mt-4">
         <Swiper
           slidesPerView={1}
           style={{ margin: '0 auto' }}
@@ -20,7 +20,7 @@ export function Banner() {
         >
           <SwiperSlide>
             <div className="flex justify-center">
-              <img
+              <Image
                 src="/banners/banner1.png"
                 width={380}
                 height={190}
@@ -30,7 +30,7 @@ export function Banner() {
           </SwiperSlide>
           <SwiperSlide>
           <div className="flex justify-center">
-              <img
+              <Image
                 src="/banners/banner2.png"
                 width={380}
                 height={190}
