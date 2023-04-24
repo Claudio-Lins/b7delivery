@@ -18,7 +18,7 @@ const Home = (data: Props) => {
 
   useEffect(() => {
     setTenant(data.tenant)
-  }, [data.tenant, setTenant])
+  }, [])
 
   const handleSearch = (searchValue: string) => {
     console.log(`Busca por ${searchValue}`)

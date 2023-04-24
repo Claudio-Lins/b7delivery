@@ -9,7 +9,7 @@ import { Button } from '../../components/Button'
 import { InputField } from '../../components/InputField'
 import styles from '../../../styles/Login.module.css'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 export default function Login(data: Props) {
   const { tenant, setTenant } = useAppContext()
@@ -17,7 +17,7 @@ export default function Login(data: Props) {
 
   useEffect(() => {
     setTenant(data.tenant)
-  }, [data.tenant, setTenant])
+  }, [])
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

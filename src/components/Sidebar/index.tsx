@@ -6,6 +6,7 @@ import { Button } from '../Button'
 import { Tenant } from '../../../types/Tenant'
 import { MenuItem } from './MenuItem'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 interface SidebarProps {
   tenant: Tenant
