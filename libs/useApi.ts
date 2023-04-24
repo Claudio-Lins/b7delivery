@@ -37,22 +37,25 @@ export const useApi = (tenantSlug: string) => ({
   getAllProducts: async () => {
     let products: Product[] = []
     for (let p = 0; p < 10; p++) {
-      products.push(tempOneProduct)
+      products.push({
+        ...tempOneProduct,
+        id: p + 1,
+      })
     }
 
     return products
   },
-  getProduct: async (id: string) => {
-    return tempOneProduct
+  getProduct: async (id: number) => {
+    return { ...tempOneProduct, id }
   },
 
   authorizeToken: async (token: string): Promise<User | false> => {
-    if(!token) {
+    if (!token) {
       return false
     }
     return {
       name: 'Claudio lins',
-      email: 'clins@me.com'
+      email: 'clins@me.com',
     }
-  }
+  },
 })
