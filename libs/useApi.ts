@@ -1,5 +1,5 @@
 import { Product } from '../types/Product'
-import { Tenant } from '../types/Tenant'
+import { User } from '../types/User'
 
 const tempOneProduct: Product = {
   id: 1,
@@ -19,7 +19,7 @@ export const useApi = (tenantSlug: string) => ({
           slug: 'b7burger',
           name: 'B7Burger',
           primaryColor: '#FB9400',
-          secondaryColor: '#ffff00',
+          secondaryColor: '#fff9f2',
         }
         break
       case 'b7pizza':
@@ -45,4 +45,14 @@ export const useApi = (tenantSlug: string) => ({
   getProduct: async (id: string) => {
     return tempOneProduct
   },
+
+  authorizeToken: async (token: string): Promise<User | false> => {
+    if(!token) {
+      return false
+    }
+    return {
+      name: 'Claudio lins',
+      email: 'clins@me.com'
+    }
+  }
 })

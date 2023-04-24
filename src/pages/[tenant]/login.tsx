@@ -10,10 +10,12 @@ import { InputField } from '../../components/InputField'
 import styles from '../../../styles/Login.module.css'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useAuthContext } from '../../../contexts/auth'
 
 export default function Login(data: Props) {
   const { tenant, setTenant } = useAppContext()
   const router = useRouter()
+  const { setToken, setUser, user } = useAuthContext()
 
   useEffect(() => {
     setTenant(data.tenant)
@@ -22,7 +24,11 @@ export default function Login(data: Props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  async function handleSubmit() {}
+  async function handleSubmit() {
+    setToken('12345')
+    setUser(user)
+    router.push(`/${data.tenant.slug}`)
+  }
   async function handleSignUp() {
     router.push(`/${data.tenant.slug}/signup`)
   }
@@ -51,9 +57,9 @@ export default function Login(data: Props) {
       relative mx-auto w-56 border-b-[1.5px] pb-10 text-center text-lg font-normal leading-[21px] text-[#bbb]
       ${styles.subtitle}
     `}
-    style={{
-      borderBottomColor: `${data.tenant.primaryColor}`
-    }}
+        style={{
+          borderBottomColor: `${data.tenant.primaryColor}`,
+        }}
       >
         Use suas crednciais para realizar o login
       </div>
@@ -122,19 +128,19 @@ export default function Login(data: Props) {
           relative mx-auto w-fit border-b-[1.5px] pb-16 text-center
         ${styles.forgetArea}
     `}
-    style={{
-      borderBottomColor: `${data.tenant.primaryColor}`
-    }}
+        style={{
+          borderBottomColor: `${data.tenant.primaryColor}`,
+        }}
       >
-        Esqueceu sua senha? 
-        <Link href={`/${data.tenant.slug}/forget`}
-            className="font-semibold ml-2"
-            style={{
-              color: data.tenant.primaryColor
-            }}
-            >
-              
-                Clique aqui
+        Esqueceu sua senha?
+        <Link
+          href={`/${data.tenant.slug}/forget`}
+          className="ml-2 font-semibold"
+          style={{
+            color: data.tenant.primaryColor,
+          }}
+        >
+          Clique aqui
         </Link>
       </div>
       <div

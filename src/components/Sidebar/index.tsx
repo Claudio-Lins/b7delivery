@@ -33,7 +33,7 @@ export function Sidebar({ tenant, open, onClose }: SidebarProps) {
           >
             {user && (
               <div className="flex flex-col items-start justify-center">
-                <strong className="text-4xl">{`user.name`}</strong>
+                <strong className="text-4xl">{user.name}</strong>
                 <span className="mt-2 text-xs text-zinc-400">
                   Último pedido há x semanas
                 </span>
