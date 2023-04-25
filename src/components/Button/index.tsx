@@ -1,26 +1,33 @@
-import { ReactNode } from 'react';
-
-import styles from './styles.module.css';
-
 interface ButtonProps {
-  color: string;
-  label: string;
-  onClick?: () => void;
+  color: string
+  label: string
+  onClick?: () => void
   fill?: boolean
+  className?: string
 }
 
-export function Button({ color, label, onClick, fill}: ButtonProps) {
+export function Button({
+  color,
+  label,
+  onClick,
+  fill,
+  className,
+}: ButtonProps) {
   return (
-    <div 
-      className='flex justify-center items-center border p-6 font-semibold rounded cursor-pointer'
-      onClick={onClick} 
+    <div
+      className={`
+        flex
+        h-14 cursor-pointer items-center justify-center rounded border-2 px-4 font-semibold
+        ${className}
+        `}
+      onClick={onClick}
       style={{
         color: fill ? '#FFF' : color,
         borderColor: color,
-        backgroundColor: fill ? color : 'transparent'
+        backgroundColor: fill ? color : 'transparent',
       }}
     >
       {label}
     </div>
-  );
+  )
 }

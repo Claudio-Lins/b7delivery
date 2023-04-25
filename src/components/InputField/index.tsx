@@ -1,15 +1,13 @@
-import { ReactNode, useState } from 'react'
+import { useState } from 'react'
 import { Eye, EyeSlash } from 'phosphor-react'
-
-import styles from './styles.module.css'
 
 type Props = {
   color: string
-  placeholder: string
+  placeholder?: string
   value: string
   onChange: (newValue: string) => void
   password?: boolean
-  className: string
+  className?: string
 }
 
 export function InputField({

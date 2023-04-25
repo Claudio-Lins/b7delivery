@@ -1,3 +1,4 @@
+import { CartItem } from '../types/CartItem'
 import { Product } from '../types/Product'
 import { User } from '../types/User'
 
@@ -5,7 +6,7 @@ const tempOneProduct: Product = {
   id: 1,
   image: '/productItem/burger.png',
   category: 'Tradicional',
-  name: 'Tamandaré',
+  name: 'X-Burger',
   price: 55.0,
   description:
     '2 Blends de carne de 150g, Queijo Cheddar,Bacon Caramelizado, Salada, Molho da casa, Pão brioche artesanal',
@@ -36,7 +37,7 @@ export const useApi = (tenantSlug: string) => ({
   },
   getAllProducts: async () => {
     let products: Product[] = []
-    for (let p = 0; p < 10; p++) {
+    for (let p = 0; p < 3; p++) {
       products.push({
         ...tempOneProduct,
         id: p + 1,
@@ -58,4 +59,25 @@ export const useApi = (tenantSlug: string) => ({
       email: 'clins@me.com',
     }
   },
+  getCartProduct: async (cartCookie: string) => {
+    let cart: CartItem[] = []
+    if (!cartCookie) return cart
+
+    const cartJson = JSON.parse(cartCookie)
+    for(let i in cartJson) {
+      if(cartJson[i].id && cartJson[i].quantity) {
+        const product = {
+          ...tempOneProduct,
+          id: cartJson[i].id,
+        }
+        cart.push({
+          quantity: cartJson[i].quantity,
+          product,
+        })
+      }
+    }
+
+    return cart
+  }
 })
+ 
