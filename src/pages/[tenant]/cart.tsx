@@ -1,14 +1,9 @@
 import type { GetServerSideProps } from 'next'
 import { useEffect, useState } from 'react'
-import { IoMdMenu } from 'react-icons/io'
 import { useAppContext } from '../../../contexts/app'
 import { useApi } from '../../../libs/useApi'
-import { Product } from '../../../types/Product'
 import { Tenant } from '../../../types/Tenant'
-import { Banner } from '../../components/Banner'
-import { ProductItem } from '../../components/ProductItem'
-import { SearchInput } from '../../components/SearchInput'
-import { Sidebar } from '../../components/Sidebar'
+import {setCookie} from 'cookies-next'
 import { getCookie } from 'cookies-next'
 import { User } from '../../../types/User'
 import { useAuthContext } from '../../../contexts/auth'
@@ -20,19 +15,39 @@ import { Button } from '../../components/Button'
 import { useFormatter } from '../../../libs/useFormatter'
 import { CartItem } from '../../../types/CartItem';
 import { useRouter } from 'next/navigation'
+import { CartCookie } from '../../../types/CartCookie'
 
 export default function Cart(data: Props) {
   const { setToken, setUser } = useAuthContext()
   const { tenant, setTenant } = useAppContext()
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [searchText, setSearchText] = useState('')
-  const [filteredProducts, setFilteredProducst] = useState<Product[]>([])
 
   const formatter = useFormatter()
   const route = useRouter()
 
   // Product Control
   const [cart, setCart] = useState<CartItem[]>(data.cart)
+  function handleCartChange(newCount: number, id: number) {
+    const tmpCart: CartItem[] = [...cart]
+    const cartIndex = tmpCart.findIndex(item => item.product.id === id)
+    if (newCount > 0) {
+      tmpCart[cartIndex].quantity = newCount
+    } else {
+      delete tmpCart[cartIndex]
+    }
+    let newCart: CartItem[] = tmpCart.filter(item => item)
+    setCart(newCart)
+
+    // update Cookie
+    let cartCookie: CartCookie[] = []
+    for (let i in newCart) {
+      cartCookie.push({
+        id: newCart[i].product.id,
+        quantity: newCart[i].quantity
+      })
+    }
+    setCookie('cart', JSON.stringify(cartCookie))
+    console.log(cartIndex);
+  }
 
   // Shipping
   const [shippingInput, setShippingInput] = useState('')
@@ -72,7 +87,7 @@ export default function Cart(data: Props) {
     data?.user && setUser(data?.user)
   }, [])
 
-  function handleCartChange() {}
+ 
 
   return (
     <div className="flex flex-col justify-center px-6 py-12">
