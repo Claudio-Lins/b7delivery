@@ -17,6 +17,7 @@ import { CartItem } from '../../../types/CartItem'
 import { useRouter } from 'next/navigation'
 import { CartCookie } from '../../../types/CartCookie'
 import ButtonIcom from '../../components/ButtonIcom'
+import { AddressProps } from '../../../types/Address'
 
 export default function Checkout(data: Props) {
   const { setToken, setUser } = useAuthContext()
@@ -51,15 +52,21 @@ export default function Checkout(data: Props) {
   }
 
   // Shipping
-  const [shippingInput, setShippingInput] = useState('')
   const [shippingPrice, setShippingPrice] = useState(0)
-  const [shippingTime, setShippingTime] = useState(0)
-  const [shippingAddress, setShippingAddress] = useState('')
-
-  function handleShippingCalc() {
-    setShippingAddress('Estrada de Me Martins, 168A - Sintra')
-    setShippingPrice(9.5)
-    setShippingTime(23)
+  const [shippingAddress, setShippingAddress] = useState<AddressProps>()
+  function handleChangeAddress() {
+    // route.push(`/${data?.tenant.slug}/address`)
+    setShippingAddress({
+      id: 1,
+      street: 'Estrada de Me Martins',
+      number: '168A',
+      complement: 'Casa',
+      neigborhood: 'Mem Martins',
+      city: 'Sintra',
+      state: 'Lisboa',
+      zipCode: '2725-000',
+    })
+    setShippingPrice(5.69)
   }
 
   // Resume
@@ -75,7 +82,7 @@ export default function Checkout(data: Props) {
   }, [cart])
 
   function handleFinish() {
-    route.push(`/${data?.tenant.slug}/checkout`)
+    
   }
 
   //
@@ -85,10 +92,6 @@ export default function Checkout(data: Props) {
     setToken(data?.token)
     data?.user && setUser(data?.user)
   }, [])
-
-  function handleChangeAddress() {
-    alert('handleChangeAddress')
-  }
 
   return (
     <div className="flex flex-col justify-center px-6 py-12">
@@ -108,26 +111,32 @@ export default function Checkout(data: Props) {
             label={'Ok'}
             leftIcon={'location'}
             rightIcon={'rightArrow'}
-            value={'Estrada de Mem Martins, 168 - Mem Martins'}
+            value={
+              shippingAddress
+                ? `${shippingAddress.street}, ${shippingAddress.number} ${shippingAddress.neigborhood}`
+                : 'Escolha um endereço'
+            }
             onClick={handleChangeAddress}
           />
         </div>
         <div className="pagament flex flex-col">
-          <span className="mb-2 font-semibold text-zinc-500">Tipos de pagamentos</span>
+          <span className="mb-2 font-semibold text-zinc-500">
+            Tipos de pagamentos
+          </span>
           <div className="flex items-center justify-between gap-2">
-          <ButtonIcom
-            fill
-            color={data.tenant.primaryColor}
-            leftIcon={'money'}
-            value={'Dinheiro'}
-            onClick={handleChangeAddress}
-          />
-          <ButtonIcom
-            color={data.tenant.primaryColor}
-            leftIcon={'card'}
-            value={'Cartão'}
-            onClick={handleChangeAddress}
-          />
+            <ButtonIcom
+              fill
+              color={data.tenant.primaryColor}
+              leftIcon={'money'}
+              value={'Dinheiro'}
+              onClick={handleChangeAddress}
+            />
+            <ButtonIcom
+              color={data.tenant.primaryColor}
+              leftIcon={'card'}
+              value={'Cartão'}
+              onClick={handleChangeAddress}
+            />
           </div>
         </div>
         <div className="troco flex flex-col">
@@ -141,7 +150,9 @@ export default function Checkout(data: Props) {
           />
         </div>
         <div className="cupom flex flex-col">
-          <span className="mb-2 font-semibold text-zinc-500">Cupom de desconto</span>
+          <span className="mb-2 font-semibold text-zinc-500">
+            Cupom de desconto
+          </span>
           <ButtonIcom
             color={data.tenant.primaryColor}
             leftIcon={'cupom'}
@@ -167,43 +178,7 @@ export default function Checkout(data: Props) {
           />
         ))}
       </div>
-      <div className="frete mt-6">
-        <span className="font-semibold text-zinc-500">
-          Calcular frete e prazo
-        </span>
-        <div className="form mt-2 flex items-center gap-2">
-          <InputField
-            placeholder="CEP"
-            color={data.tenant.primaryColor}
-            value={shippingInput}
-            onChange={(newValue) => setShippingInput(newValue)}
-            className={'flex-1 bg-transparent outline-none'}
-          />
-          <Button
-            color={data.tenant.primaryColor}
-            label={'Ok'}
-            onClick={handleShippingCalc}
-          />
-        </div>
-        {shippingTime > 0 && (
-          <>
-            <div className="shipping-info mt-4 rounded-md bg-zinc-100 p-6">
-              <span className="text-xs text-zinc-500">{shippingAddress}</span>
-              <div className="mt-2 flex items-center justify-between">
-                <span className=" text-zinc-900">
-                  Prazo de entrega {shippingTime} minutos
-                </span>
-                <span
-                  className=" font-bold"
-                  style={{ color: data.tenant.primaryColor }}
-                >
-                  {formatter.formatPrice(shippingPrice)}
-                </span>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
+
       <div className="resume mt-4 flex flex-col gap-6 rounded-md bg-zinc-100 p-6">
         <div className="flex items-center justify-between">
           <span className=" text-zinc-900">Subtotal</span>
@@ -230,8 +205,9 @@ export default function Checkout(data: Props) {
         <Button
           fill
           color={data.tenant.primaryColor}
-          label={'Continuar'}
+          label={'Finalizar pedido'}
           onClick={handleFinish}
+          disabled={!shippingAddress}
         />
       </div>
     </div>

@@ -38,7 +38,7 @@ export default function ButtonIcom({
       )}
       <div
         className={`
-          px-4 whitespace-nowrap overflow-hidden text-ellipsis
+          px-4 whitespace-nowrap overflow-hidden text-ellipsis w-full
           ${fill ? 'text-zinc-50' : '#1b1b1b'}
         `}
       >
