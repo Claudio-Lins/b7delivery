@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useAppContext } from '../../../contexts/app'
 import { useApi } from '../../../libs/useApi'
 import { Tenant } from '../../../types/Tenant'
-import {setCookie} from 'cookies-next'
+import { setCookie } from 'cookies-next'
 import { getCookie } from 'cookies-next'
 import { User } from '../../../types/User'
 import { useAuthContext } from '../../../contexts/auth'
@@ -13,11 +13,12 @@ import { SelectedProduct } from '../../components/Cart/SelectedProduct'
 import { InputField } from '../../components/InputField'
 import { Button } from '../../components/Button'
 import { useFormatter } from '../../../libs/useFormatter'
-import { CartItem } from '../../../types/CartItem';
+import { CartItem } from '../../../types/CartItem'
 import { useRouter } from 'next/navigation'
 import { CartCookie } from '../../../types/CartCookie'
+import ButtonIcom from '../../components/ButtonIcom'
 
-export default function Cart(data: Props) {
+export default function Checkout(data: Props) {
   const { setToken, setUser } = useAuthContext()
   const { tenant, setTenant } = useAppContext()
 
@@ -28,13 +29,13 @@ export default function Cart(data: Props) {
   const [cart, setCart] = useState<CartItem[]>(data.cart)
   function handleCartChange(newCount: number, id: number) {
     const tmpCart: CartItem[] = [...cart]
-    const cartIndex = tmpCart.findIndex(item => item.product.id === id)
+    const cartIndex = tmpCart.findIndex((item) => item.product.id === id)
     if (newCount > 0) {
       tmpCart[cartIndex].quantity = newCount
     } else {
       delete tmpCart[cartIndex]
     }
-    let newCart: CartItem[] = tmpCart.filter(item => item)
+    let newCart: CartItem[] = tmpCart.filter((item) => item)
     setCart(newCart)
 
     // update Cookie
@@ -42,11 +43,11 @@ export default function Cart(data: Props) {
     for (let i in newCart) {
       cartCookie.push({
         id: newCart[i].product.id,
-        quantity: newCart[i].quantity
+        quantity: newCart[i].quantity,
       })
     }
     setCookie('cart', JSON.stringify(cartCookie))
-    console.log(cartIndex);
+    console.log(cartIndex)
   }
 
   // Shipping
@@ -85,18 +86,71 @@ export default function Cart(data: Props) {
     data?.user && setUser(data?.user)
   }, [])
 
- 
+  function handleChangeAddress() {
+    alert('handleChangeAddress')
+  }
 
   return (
     <div className="flex flex-col justify-center px-6 py-12">
       <Head>
-        <title>Sacola | {data?.tenant.name}</title>
+        <title>Checkout | {data?.tenant.name}</title>
       </Head>
       <Header
         backHref={`/${data?.tenant.slug}`}
         color={`${data?.tenant.primaryColor}`}
-        title="Sacola"
+        title="Checkout"
       />
+      <div className="flex flex-col gap-6 border-t pb-10 pt-6">
+        <div className="endereco flex flex-col">
+          <span className="mb-2 font-semibold text-zinc-500">Endereço</span>
+          <ButtonIcom
+            color={data.tenant.primaryColor}
+            label={'Ok'}
+            leftIcon={'location'}
+            rightIcon={'rightArrow'}
+            value={'Estrada de Mem Martins, 168 - Mem Martins'}
+            onClick={handleChangeAddress}
+          />
+        </div>
+        <div className="pagament flex flex-col">
+          <span className="mb-2 font-semibold text-zinc-500">Tipos de pagamentos</span>
+          <div className="flex items-center justify-between gap-2">
+          <ButtonIcom
+            fill
+            color={data.tenant.primaryColor}
+            leftIcon={'money'}
+            value={'Dinheiro'}
+            onClick={handleChangeAddress}
+          />
+          <ButtonIcom
+            color={data.tenant.primaryColor}
+            leftIcon={'card'}
+            value={'Cartão'}
+            onClick={handleChangeAddress}
+          />
+          </div>
+        </div>
+        <div className="troco flex flex-col">
+          <span className="mb-2 font-semibold text-zinc-500">Troco</span>
+          <InputField
+            placeholder="Troco para"
+            color={data.tenant.primaryColor}
+            onChange={() => {}}
+            value="50,00 €"
+            className={'flex-1 bg-transparent outline-none'}
+          />
+        </div>
+        <div className="cupom flex flex-col">
+          <span className="mb-2 font-semibold text-zinc-500">Cupom de desconto</span>
+          <ButtonIcom
+            color={data.tenant.primaryColor}
+            leftIcon={'cupom'}
+            rightIcon={'checked'}
+            value={'BURGER10'}
+            onClick={handleChangeAddress}
+          />
+        </div>
+      </div>
       <div className="mt-4 border-t border-b p-6">
         <span>
           {cart.length} ite{cart.length >= 2 ? 'ns' : 'm'}
@@ -109,9 +163,8 @@ export default function Cart(data: Props) {
             color={data.tenant.primaryColor}
             quantity={cartItem.quantity}
             product={cartItem.product}
-            onChange={handleCartChange} 
-            editabled
-            />
+            onChange={handleCartChange}
+          />
         ))}
       </div>
       <div className="frete mt-6">
