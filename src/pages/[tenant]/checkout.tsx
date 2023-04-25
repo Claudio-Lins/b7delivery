@@ -28,28 +28,6 @@ export default function Checkout(data: Props) {
 
   // Product Control
   const [cart, setCart] = useState<CartItem[]>(data.cart)
-  function handleCartChange(newCount: number, id: number) {
-    const tmpCart: CartItem[] = [...cart]
-    const cartIndex = tmpCart.findIndex((item) => item.product.id === id)
-    if (newCount > 0) {
-      tmpCart[cartIndex].quantity = newCount
-    } else {
-      delete tmpCart[cartIndex]
-    }
-    let newCart: CartItem[] = tmpCart.filter((item) => item)
-    setCart(newCart)
-
-    // update Cookie
-    let cartCookie: CartCookie[] = []
-    for (let i in newCart) {
-      cartCookie.push({
-        id: newCart[i].product.id,
-        quantity: newCart[i].quantity,
-      })
-    }
-    setCookie('cart', JSON.stringify(cartCookie))
-    console.log(cartIndex)
-  }
 
   // Shipping
   const [shippingPrice, setShippingPrice] = useState(0)
@@ -81,8 +59,13 @@ export default function Checkout(data: Props) {
     setSubTotal(newSubTotal)
   }, [cart])
 
-  function handleFinish() {
-    
+  function handleFinish() {}
+
+  // Payment
+  const [payment, setPayment] = useState('money')
+  const [paymentChange, setPaymentChange] = useState(0)
+  function handleChangePayment() {
+    payment === 'money' ? setPayment('card') : setPayment('money')
   }
 
   //
@@ -125,30 +108,33 @@ export default function Checkout(data: Props) {
           </span>
           <div className="flex items-center justify-between gap-2">
             <ButtonIcom
-              fill
+              fill={payment === 'money'}
               color={data.tenant.primaryColor}
               leftIcon={'money'}
               value={'Dinheiro'}
-              onClick={handleChangeAddress}
+              onClick={handleChangePayment}
             />
             <ButtonIcom
+              fill={payment === 'card'}
               color={data.tenant.primaryColor}
               leftIcon={'card'}
               value={'Cartão'}
-              onClick={handleChangeAddress}
+              onClick={handleChangePayment}
             />
           </div>
         </div>
-        <div className="troco flex flex-col">
-          <span className="mb-2 font-semibold text-zinc-500">Troco</span>
-          <InputField
-            placeholder="Troco para"
-            color={data.tenant.primaryColor}
-            onChange={() => {}}
-            value="50,00 €"
-            className={'flex-1 bg-transparent outline-none'}
-          />
-        </div>
+        {payment === 'money' && (
+          <div className="troco flex flex-col">
+            <span className="mb-2 font-semibold text-zinc-500">Troco</span>
+            <InputField
+              placeholder="Troco para"
+              color={data.tenant.primaryColor}
+              onChange={(newValue) => setPaymentChange(Number(newValue))}
+              value={paymentChange ? paymentChange.toString() : ''}
+              className={'flex-1 bg-transparent outline-none'}
+            />
+          </div>
+        )}
         <div className="cupom flex flex-col">
           <span className="mb-2 font-semibold text-zinc-500">
             Cupom de desconto
@@ -174,7 +160,7 @@ export default function Checkout(data: Props) {
             color={data.tenant.primaryColor}
             quantity={cartItem.quantity}
             product={cartItem.product}
-            onChange={handleCartChange}
+            onChange={() => {}}
           />
         ))}
       </div>

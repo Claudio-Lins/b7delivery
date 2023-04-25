@@ -22,7 +22,7 @@ export default function ButtonIcom({
 }: ButtonIcomProps) {
   return (
     <div
-      className="flex items-center justify-between p-2 rounded cursor-pointer w-full"
+      className="flex items-center justify-between p-2 rounded cursor-pointer w-full transition-all duration-500"
       style={{ backgroundColor: fill ? color : '#f9f9fb' }}
       onClick={onClick}
     >
