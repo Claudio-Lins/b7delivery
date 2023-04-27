@@ -97,7 +97,7 @@ export default function Cart(data: Props) {
         color={`${data?.tenant.primaryColor}`}
         title="Sacola"
       />
-      <div className="mt-4 border-t border-b p-6">
+      <div className=" border-b p-6">
         <span>
           {cart.length} ite{cart.length >= 2 ? 'ns' : 'm'}
         </span>

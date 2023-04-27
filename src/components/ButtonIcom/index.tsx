@@ -6,7 +6,7 @@ interface ButtonIcomProps {
   leftIcon?: string
   rightIcon?: string
   value: string
-  onClick: () => void
+  onClick?: () => void
   fill?: boolean
   label?: string
 }

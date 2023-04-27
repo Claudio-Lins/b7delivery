@@ -1,3 +1,4 @@
+
 import Link from 'next/link'
 import { ArrowLeft } from 'phosphor-react'
 
@@ -12,7 +13,7 @@ type Props = {
 
 export function Header({ backHref, color, title, subtitle, invert }: Props) {
   return (
-    <div className="flex h-12">
+    <div className="flex w-full py-6 border-b">
       <div className="flex h-12 items-center justify-center">
         <Link
           href={backHref}

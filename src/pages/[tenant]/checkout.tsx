@@ -33,18 +33,18 @@ export default function Checkout(data: Props) {
   const [shippingPrice, setShippingPrice] = useState(0)
   const [shippingAddress, setShippingAddress] = useState<AddressProps>()
   function handleChangeAddress() {
-    // route.push(`/${data?.tenant.slug}/address`)
-    setShippingAddress({
-      id: 1,
-      street: 'Estrada de Me Martins',
-      number: '168A',
-      complement: 'Casa',
-      neigborhood: 'Mem Martins',
-      city: 'Sintra',
-      state: 'Lisboa',
-      zipCode: '2725-000',
-    })
-    setShippingPrice(5.69)
+    route.push(`/${data?.tenant.slug}/address`)
+    // setShippingAddress({
+    //   id: 1,
+    //   street: 'Estrada de Me Martins',
+    //   number: '168A',
+    //   complement: 'Casa',
+    //   neigborhood: 'Mem Martins',
+    //   city: 'Sintra',
+    //   state: 'Lisboa',
+    //   zipCode: '2725-000',
+    // })
+    // setShippingPrice(5.69)
   }
 
   // Resume
@@ -68,7 +68,14 @@ export default function Checkout(data: Props) {
     payment === 'money' ? setPayment('card') : setPayment('money')
   }
 
-  //
+  //CUPOM
+  const [cupom, setCupom] = useState('')
+  const [cupomDiscount, setCupomDiscount] = useState(0)
+  const [cupomInput, setCupomInput] = useState('')
+  function handleSetCupom() {
+    setCupom(cupomInput)
+    setCupomDiscount(5)
+  }
 
   useEffect(() => {
     setTenant(data?.tenant)
@@ -86,7 +93,7 @@ export default function Checkout(data: Props) {
         color={`${data?.tenant.primaryColor}`}
         title="Checkout"
       />
-      <div className="flex flex-col gap-6 border-t pb-10 pt-6">
+      <div className="flex flex-col gap-6 pb-10 pt-6">
         <div className="endereco flex flex-col">
           <span className="mb-2 font-semibold text-zinc-500">Endereço</span>
           <ButtonIcom
@@ -139,13 +146,30 @@ export default function Checkout(data: Props) {
           <span className="mb-2 font-semibold text-zinc-500">
             Cupom de desconto
           </span>
+          {cupom &&
           <ButtonIcom
             color={data.tenant.primaryColor}
             leftIcon={'cupom'}
             rightIcon={'checked'}
-            value={'BURGER10'}
-            onClick={handleChangeAddress}
+            value={cupom.toUpperCase()}
           />
+          }
+          {!cupom && 
+            <div className="flex items-center justify-between gap-2">
+              <InputField
+                placeholder="Cupom"
+                color={data.tenant.primaryColor}
+                value={cupomInput}
+                onChange={(newValue) => setCupomInput(newValue)}
+                className={'flex-1 bg-transparent outline-none'}
+              />
+              <Button
+                color={data.tenant.primaryColor}
+                label={'Aplicar'}
+                onClick={handleSetCupom}
+              />
+            </div>
+          }
         </div>
       </div>
       <div className="mt-4 border-t border-b p-6">
@@ -172,6 +196,14 @@ export default function Checkout(data: Props) {
             {formatter.formatPrice(subTotal)}
           </span>
         </div>
+        {cupomDiscount > 0 && 
+        <div className="flex items-center justify-between">
+          <span className=" text-zinc-900">Desconto</span>
+          <span className=" font-semibold text-zinc-900">
+            - {formatter.formatPrice(cupomDiscount)}
+          </span>
+        </div>
+        }
         <div className="flex items-center justify-between">
           <span className=" text-zinc-900">Frete</span>
           <span className=" font-semibold text-zinc-900">
@@ -185,7 +217,7 @@ export default function Checkout(data: Props) {
             className="text-2xl font-semibold"
             style={{ color: data.tenant.primaryColor }}
           >
-            {formatter.formatPrice(shippingPrice + subTotal)}
+            {formatter.formatPrice(shippingPrice + subTotal - cupomDiscount)}
           </span>
         </div>
         <Button

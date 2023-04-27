@@ -1,3 +1,4 @@
+import { AddressProps } from '../types/Address'
 import { CartItem } from '../types/CartItem'
 import { Product } from '../types/Product'
 import { User } from '../types/User'
@@ -64,8 +65,8 @@ export const useApi = (tenantSlug: string) => ({
     if (!cartCookie) return cart
 
     const cartJson = JSON.parse(cartCookie)
-    for(let i in cartJson) {
-      if(cartJson[i].id && cartJson[i].quantity) {
+    for (let i in cartJson) {
+      if (cartJson[i].id && cartJson[i].quantity) {
         const product = {
           ...tempOneProduct,
           id: cartJson[i].id,
@@ -78,6 +79,25 @@ export const useApi = (tenantSlug: string) => ({
     }
 
     return cart
+  },
+  getUserAddress: async (email: string) => {
+    const addresses: AddressProps[] = []
+    for (let i = 0; i < 4; i++) {
+      addresses.push({
+        id: i + 1,
+        street: 'Estrada de Mem Martins',
+        number: `${i + 1}00`,
+        city: 'Sintra',
+        zipCode: '2724-381',
+        neigborhood: 'Mem Martins',
+        state: 'LX',
+      })
+    }
+
+    return addresses
+  },
+
+  getShippingPrice: async (address: AddressProps) => {
+    return 5.55
   }
 })
- 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { CurrencyCircleDollar, MapPin, CreditCard, Ticket,  Envelope, CaretRight, CheckCircle  } from 'phosphor-react'
+import { CurrencyCircleDollar, MapPin, CreditCard, Ticket,  Envelope, CaretRight, CheckCircle, DotsThreeVertical, Pencil, Trash  } from 'phosphor-react'
 
 interface IconProps {
   color: string
@@ -19,6 +19,9 @@ export default function Icon({color, height, svg, widht, size}: IconProps) {
       {svg === 'mailSent' && <Envelope color={color} size={size} />}
       {svg === 'money' && <CurrencyCircleDollar color={color} size={size} />}
       {svg === 'rightArrow' && <CaretRight color={color} size={size} />}
+      {svg === 'dots' && <DotsThreeVertical color={color} size={size} />}
+      {svg === 'edit' && <Pencil color={color} size={size} />}
+      {svg === 'trash' && <Trash color={color} size={size} />}
     </div>
   )
 }
