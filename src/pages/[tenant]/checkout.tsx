@@ -21,30 +21,18 @@ import { AddressProps } from '../../../types/Address'
 
 export default function Checkout(data: Props) {
   const { setToken, setUser } = useAuthContext()
-  const { tenant, setTenant } = useAppContext()
+  const { tenant, setTenant, shippingAddress, shippingPrice } = useAppContext()
 
   const formatter = useFormatter()
   const route = useRouter()
+  const api = useApi(data.tenant.slug)
 
   // Product Control
   const [cart, setCart] = useState<CartItem[]>(data.cart)
 
   // Shipping
-  const [shippingPrice, setShippingPrice] = useState(0)
-  const [shippingAddress, setShippingAddress] = useState<AddressProps>()
   function handleChangeAddress() {
     route.push(`/${data?.tenant.slug}/address`)
-    // setShippingAddress({
-    //   id: 1,
-    //   street: 'Estrada de Me Martins',
-    //   number: '168A',
-    //   complement: 'Casa',
-    //   neigborhood: 'Mem Martins',
-    //   city: 'Sintra',
-    //   state: 'Lisboa',
-    //   zipCode: '2725-000',
-    // })
-    // setShippingPrice(5.69)
   }
 
   // Resume
@@ -53,19 +41,17 @@ export default function Checkout(data: Props) {
 
   useEffect(() => {
     let newSubTotal = 0
-    for (let item of cart) {
-      newSubTotal += item.product.price * item.quantity
+    for (let item in cart) {
+      newSubTotal += cart[item].product.price * cart[item].quantity
     }
     setSubTotal(newSubTotal)
   }, [cart])
 
-  function handleFinish() {}
-
   // Payment
-  const [payment, setPayment] = useState('money')
+  const [paymentType, setPaymentType] = useState('money')
   const [paymentChange, setPaymentChange] = useState(0)
   function handleChangePayment() {
-    payment === 'money' ? setPayment('card') : setPayment('money')
+    paymentType === 'money' ? setPaymentType('card') : setPaymentType('money')
   }
 
   //CUPOM
@@ -83,8 +69,26 @@ export default function Checkout(data: Props) {
     data?.user && setUser(data?.user)
   }, [])
 
+  async function handleFinish() {
+    if(shippingAddress){
+      const order = await api.createOrder(
+        shippingAddress,
+        paymentType,
+        paymentChange,
+        cupom,
+        data.cart
+      )
+      if(order){
+        setCookie('cart', '', { expires: new Date(0) })
+        route.push(`/${data?.tenant.slug}/order/${order.id}`)
+      } else {
+        alert('Erro ao finalizar o pedido')
+      }
+    }
+  }
+
   return (
-    <div className="flex flex-col justify-center px-6 py-12">
+    <div className="flex flex-col justify-center px-6 pb-12">
       <Head>
         <title>Checkout | {data?.tenant.name}</title>
       </Head>
@@ -103,7 +107,7 @@ export default function Checkout(data: Props) {
             rightIcon={'rightArrow'}
             value={
               shippingAddress
-                ? `${shippingAddress.street}, ${shippingAddress.number} ${shippingAddress.neigborhood}`
+                ? `${shippingAddress.street}, ${shippingAddress.number} ${shippingAddress.neighborhood}`
                 : 'Escolha um endereço'
             }
             onClick={handleChangeAddress}
@@ -115,14 +119,14 @@ export default function Checkout(data: Props) {
           </span>
           <div className="flex items-center justify-between gap-2">
             <ButtonIcom
-              fill={payment === 'money'}
+              fill={paymentType === 'money'}
               color={data.tenant.primaryColor}
               leftIcon={'money'}
               value={'Dinheiro'}
               onClick={handleChangePayment}
             />
             <ButtonIcom
-              fill={payment === 'card'}
+              fill={paymentType === 'card'}
               color={data.tenant.primaryColor}
               leftIcon={'card'}
               value={'Cartão'}
@@ -130,7 +134,7 @@ export default function Checkout(data: Props) {
             />
           </div>
         </div>
-        {payment === 'money' && (
+        {paymentType === 'money' && (
           <div className="troco flex flex-col">
             <span className="mb-2 font-semibold text-zinc-500">Troco</span>
             <InputField
@@ -146,15 +150,15 @@ export default function Checkout(data: Props) {
           <span className="mb-2 font-semibold text-zinc-500">
             Cupom de desconto
           </span>
-          {cupom &&
-          <ButtonIcom
-            color={data.tenant.primaryColor}
-            leftIcon={'cupom'}
-            rightIcon={'checked'}
-            value={cupom.toUpperCase()}
-          />
-          }
-          {!cupom && 
+          {cupom && (
+            <ButtonIcom
+              color={data.tenant.primaryColor}
+              leftIcon={'cupom'}
+              rightIcon={'checked'}
+              value={cupom.toUpperCase()}
+            />
+          )}
+          {!cupom && (
             <div className="flex items-center justify-between gap-2">
               <InputField
                 placeholder="Cupom"
@@ -169,7 +173,7 @@ export default function Checkout(data: Props) {
                 onClick={handleSetCupom}
               />
             </div>
-          }
+          )}
         </div>
       </div>
       <div className="mt-4 border-t border-b p-6">
@@ -196,14 +200,14 @@ export default function Checkout(data: Props) {
             {formatter.formatPrice(subTotal)}
           </span>
         </div>
-        {cupomDiscount > 0 && 
-        <div className="flex items-center justify-between">
-          <span className=" text-zinc-900">Desconto</span>
-          <span className=" font-semibold text-zinc-900">
-            - {formatter.formatPrice(cupomDiscount)}
-          </span>
-        </div>
-        }
+        {cupomDiscount > 0 && (
+          <div className="flex items-center justify-between">
+            <span className=" text-zinc-900">Desconto</span>
+            <span className=" font-semibold text-zinc-900">
+              - {formatter.formatPrice(cupomDiscount)}
+            </span>
+          </div>
+        )}
         <div className="flex items-center justify-between">
           <span className=" text-zinc-900">Frete</span>
           <span className=" font-semibold text-zinc-900">

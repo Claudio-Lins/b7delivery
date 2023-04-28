@@ -1,25 +1,24 @@
 import type { GetServerSideProps } from 'next'
 import { useEffect, useState } from 'react'
-import { useAppContext } from '../../../contexts/app'
-import { useApi } from '../../../libs/useApi'
-import { Tenant } from '../../../types/Tenant'
-import { setCookie } from 'cookies-next'
+import { useAppContext } from '../../../../contexts/app'
+import { useApi } from '../../../../libs/useApi'
+import { Tenant } from '../../../../types/Tenant'
 import { getCookie } from 'cookies-next'
-import { User } from '../../../types/User'
-import { useAuthContext } from '../../../contexts/auth'
+import { User } from '../../../../types/User'
+import { useAuthContext } from '../../../../contexts/auth'
 import Head from 'next/head'
-import { Header } from '../../components'
-import { InputField } from '../../components/InputField'
-import { Button } from '../../components/Button'
-import { useFormatter } from '../../../libs/useFormatter'
-import { CartItem } from '../../../types/CartItem'
+import { Header } from '../../../components'
+import { InputField } from '../../../components/InputField'
+import { Button } from '../../../components/Button'
+import { useFormatter } from '../../../../libs/useFormatter'
+import { CartItem } from '../../../../types/CartItem'
 import { useRouter } from 'next/navigation'
-import { AddressProps } from '../../../types/Address'
-import { AddressItem } from '../../components/AddressItem'
+import { AddressProps } from '../../../../types/Address'
+import { AddressItem } from '../../../components/AddressItem'
 
 export default function Address(data: Props) {
   const { setToken, setUser } = useAuthContext()
-  const { tenant, setTenant } = useAppContext()
+  const { tenant, setTenant, setShippingAddress, setShippingPrice } = useAppContext()
 
   const formatter = useFormatter()
   const route = useRouter()
@@ -31,27 +30,28 @@ export default function Address(data: Props) {
     data?.user && setUser(data?.user)
   }, [])
 
-  function handleNewAddress() {
-    route.push(`/${data?.tenant.slug}/new-address`)
-  }
-
   async function handleAddressSelect(address: AddressProps) {
     const price = await api.getShippingPrice(address)
     if (price) {
-      // Salvar no context
-      // endereço e frete
-
+      setShippingAddress(address)
+      setShippingPrice(price)
       route.push(`/${data?.tenant.slug}/checkout`)
     }
   }
 
   function handleAddressEdit(id: number) {
-    alert('Editar')
+    route.push(`/${data?.tenant.slug}/address/${id}`)
   }
 
-  function hamdleAddressDelete(id: number) {
-    alert('Deletar')
+  async function hamdleAddressDelete(id: number) {
+    await api.deleteUserAddress(id)
+    route.refresh()
   }
+
+  function handleNewAddress() {
+    route.push(`/${data?.tenant.slug}/address/new`)
+  }
+
 
   // Menu Events
   const [menuOpened, setMenuOpened] = useState(0)
@@ -71,7 +71,7 @@ export default function Address(data: Props) {
   }, [menuOpened])
 
   return (
-    <div className="flex h-screen flex-col justify-center px-6 py-12">
+    <div className="flex h-screen flex-col justify-center px-6 pb-12">
       <Head>
         <title>Endereços | {data?.tenant.name}</title>
       </Head>

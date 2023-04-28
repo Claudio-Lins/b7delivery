@@ -47,7 +47,7 @@ const Product = (data: Props) => {
         quantity: qtCount
       })
     }
-console.log(cart);
+    
     // setting Cookie
     setCookie('cart', JSON.stringify(cart))
     route.push(`/${data.tenant.slug}/cart`)
@@ -68,7 +68,7 @@ console.log(cart);
       </Head>
       <div
         className={`
-       absolute left-6 top-16 right-6
+       absolute left-6 right-6
     ${styles.headerArea}
     `}
       >

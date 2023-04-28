@@ -9,6 +9,7 @@ interface ButtonIcomProps {
   onClick?: () => void
   fill?: boolean
   label?: string
+  className?: string
 }
 
 export default function ButtonIcom({
@@ -19,10 +20,14 @@ export default function ButtonIcom({
   fill,
   leftIcon,
   rightIcon,
+  className,
 }: ButtonIcomProps) {
   return (
     <div
-      className="flex items-center justify-between p-2 rounded cursor-pointer w-full transition-all duration-500"
+      className={`
+        flex items-center justify-between p-2 rounded cursor-pointer w-full transition-all duration-500
+        ${className}
+        `}
       style={{ backgroundColor: fill ? color : '#f9f9fb' }}
       onClick={onClick}
     >

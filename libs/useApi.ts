@@ -1,5 +1,6 @@
 import { AddressProps } from '../types/Address'
 import { CartItem } from '../types/CartItem'
+import { OrderProps } from '../types/Order'
 import { Product } from '../types/Product'
 import { User } from '../types/User'
 
@@ -11,6 +12,34 @@ const tempOneProduct: Product = {
   price: 55.0,
   description:
     '2 Blends de carne de 150g, Queijo Cheddar,Bacon Caramelizado, Salada, Molho da casa, Pão brioche artesanal',
+}
+
+const temporaryOrder: OrderProps = {
+  id: 1,
+  status: 'sent',
+  orderDate: '2021-05-01T00:00:00.000Z',
+  userId: '1',
+  shippingAddress: {
+    id: 1,
+    street: 'Estrada de Mem Martins',
+    number: '100',
+    city: 'Sintra',
+    zipCode: '2724-381',
+    neighborhood: 'Mem Martins',
+    state: 'LX',
+  },
+  shippingPrice: 5.55,
+  paymentType: 'card',
+  paymentChange: 100,
+  cupom: 'CUPOM10',
+  cupomDiscount: 10,
+  products: [
+    {product: { ...tempOneProduct, id: 1}, quantity: 1},
+    {product: { ...tempOneProduct, id: 2}, quantity: 3},
+    {product: { ...tempOneProduct, id: 3}, quantity: 2}
+  ],
+  subtotal: 165,
+  total: 170.55,
 }
 
 export const useApi = (tenantSlug: string) => ({
@@ -89,7 +118,7 @@ export const useApi = (tenantSlug: string) => ({
         number: `${i + 1}00`,
         city: 'Sintra',
         zipCode: '2724-381',
-        neigborhood: 'Mem Martins',
+        neighborhood: 'Mem Martins',
         state: 'LX',
       })
     }
@@ -97,7 +126,50 @@ export const useApi = (tenantSlug: string) => ({
     return addresses
   },
 
+  addUserAddress: async (address: AddressProps) => {
+    console.log(address)
+    return {
+      ...address,
+      id: 5,
+    }
+  },
+  editUserAddress: async (newAddressData: AddressProps) => {
+    console.log(newAddressData)
+    return newAddressData
+  },
+
+  deleteUserAddress: async (addressId: number) => {
+    return true
+  },
+
+  getUserAddressById: async (addressId: number) => {
+    const address: AddressProps = {
+      id: addressId,
+      street: 'Estrada de Mem Martins',
+      number: `${addressId}00`,
+      city: 'Sintra',
+      zipCode: '2724-381',
+      neighborhood: 'Mem Martins',
+      state: 'LX',
+    }
+    return address
+  },
+
   getShippingPrice: async (address: AddressProps) => {
     return 5.55
+  },
+
+  createOrder: async (
+    address: AddressProps,
+    paymentType: string,
+    paymentChange: number,
+    cupom: string,
+    cart: CartItem[]
+  ) => {
+    return temporaryOrder
+  },
+
+  getOrder: async (orderId: number) => {
+    return temporaryOrder
   }
 })

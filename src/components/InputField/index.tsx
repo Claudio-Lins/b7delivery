@@ -7,6 +7,7 @@ type Props = {
   value: string
   onChange: (newValue: string) => void
   password?: boolean
+  warning?: boolean
   className?: string
 }
 
@@ -16,6 +17,7 @@ export function InputField({
   value,
   onChange,
   password,
+  warning,
   className,
 }: Props) {
   const [showPassword, setShowPassword] = useState(false)
@@ -29,7 +31,7 @@ export function InputField({
     <div
       className="flex h-14 w-full items-center justify-start rounded border-2 bg-[#F9F9FB] px-4"
       style={{
-        borderColor: focused ? color : '#F9F9FB',
+        borderColor: !warning ? (focused ? color : '#F9F9FB') : '#ef1606',
         backgroundColor: focused ? '#FFF' : '#F9F9FB',
       }}
     >

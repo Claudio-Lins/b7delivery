@@ -88,7 +88,7 @@ export default function Cart(data: Props) {
  
 
   return (
-    <div className="flex flex-col justify-center px-6 py-12">
+    <div className="flex flex-col justify-center px-6 pb-12">
       <Head>
         <title>Sacola | {data?.tenant.name}</title>
       </Head>

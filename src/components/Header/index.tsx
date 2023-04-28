@@ -29,7 +29,7 @@ export function Header({ backHref, color, title, subtitle, invert }: Props) {
           <ArrowLeft size={28} color={invert ? '#FFF' : color} />
         </Link>
       </div>
-      <div className="flex flex-1 flex-col items-center justify-center">
+      <div className="flex flex-1 flex-col items-center mr-5 justify-center">
         {title && (
           <div
             className="text-2xl font-semibold text-[#1b1b1b]"
