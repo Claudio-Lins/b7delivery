@@ -17,6 +17,7 @@ import { useFormatter } from '../../../libs/useFormatter'
 import { CartItem } from '../../../types/CartItem'
 import { useRouter } from 'next/router'
 import ButtonIcom from '../../components/ButtonIcom'
+import Link from 'next/link'
 
 export default function Checkout(data: Props) {
   const { setToken, setUser } = useAuthContext()
@@ -98,6 +99,7 @@ export default function Checkout(data: Props) {
       <div className="flex flex-col gap-6 pb-10 pt-6">
         <div className="endereco flex flex-col">
           <span className="mb-2 font-semibold text-zinc-500">Endereço</span>
+          <Link href={`/${data?.tenant.slug}/address`}>
           <ButtonIcom
             color={data.tenant.primaryColor}
             label={'Ok'}
@@ -108,8 +110,9 @@ export default function Checkout(data: Props) {
                 ? `${shippingAddress.street}, ${shippingAddress.number} ${shippingAddress.neighborhood}`
                 : 'Escolha um endereço'
             }
-            onClick={handleChangeAddress}
+            onClick={() => {}}
           />
+          </Link>
         </div>
         <div className="pagament flex flex-col">
           <span className="mb-2 font-semibold text-zinc-500">
