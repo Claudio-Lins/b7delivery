@@ -31,7 +31,7 @@ export function AddressItem({
         onClick={() => onSelect(address)}
         className={`w-full cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap px-4`}
       >
-        {`${address.street}, ${address.number} - ${address.neigborhood}`}
+        {`${address.street}, ${address.number} - ${address.neighborhood}`}
       </div>
       <div className="cursor-pointer px-3">
         <div
