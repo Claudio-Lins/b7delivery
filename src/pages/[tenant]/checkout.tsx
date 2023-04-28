@@ -15,10 +15,8 @@ import { InputField } from '../../components/InputField'
 import { Button } from '../../components/Button'
 import { useFormatter } from '../../../libs/useFormatter'
 import { CartItem } from '../../../types/CartItem'
-import { useRouter } from 'next/navigation'
-import { CartCookie } from '../../../types/CartCookie'
+import { useRouter } from 'next/router'
 import ButtonIcom from '../../components/ButtonIcom'
-import { AddressProps } from '../../../types/Address'
 
 export default function Checkout(data: Props) {
   const { setToken, setUser } = useAuthContext()
@@ -38,7 +36,6 @@ export default function Checkout(data: Props) {
 
   // Resume
   const [subTotal, setSubTotal] = useState(0)
-  const [total, setTotal] = useState(0)
 
   useEffect(() => {
     let newSubTotal = 0
