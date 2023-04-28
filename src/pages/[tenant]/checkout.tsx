@@ -32,7 +32,7 @@ export default function Checkout(data: Props) {
 
   // Shipping
   function handleChangeAddress() {
-    route.push(`/${data?.tenant.slug}/address`)
+    route.push(`/${data?.tenant.slug}/my-addresses`)
   }
 
   // Resume
@@ -99,7 +99,7 @@ export default function Checkout(data: Props) {
       <div className="flex flex-col gap-6 pb-10 pt-6">
         <div className="endereco flex flex-col">
           <span className="mb-2 font-semibold text-zinc-500">Endereço</span>
-          <Link href={`/${data?.tenant.slug}/my-addresses`}>
+         
           <ButtonIcom
             color={data.tenant.primaryColor}
             label={'Ok'}
@@ -110,9 +110,9 @@ export default function Checkout(data: Props) {
                 ? `${shippingAddress.street}, ${shippingAddress.number} ${shippingAddress.neighborhood}`
                 : 'Escolha um endereço'
             }
-            onClick={() => {}}
+            onClick={handleChangeAddress}
           />
-          </Link>
+         
         </div>
         <div className="pagament flex flex-col">
           <span className="mb-2 font-semibold text-zinc-500">

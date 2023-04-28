@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation'
 import { AddressProps } from '../../../types/Address'
 import { AddressItem } from '../../components/AddressItem'
 
-export default function MyAddress(data: Props) {
+export default function MyAddresses(data: Props) {
   const { setToken, setUser } = useAuthContext()
   const { tenant, setTenant, setShippingAddress, setShippingPrice } = useAppContext()
 
