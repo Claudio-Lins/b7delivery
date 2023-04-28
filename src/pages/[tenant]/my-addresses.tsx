@@ -1,22 +1,22 @@
 import type { GetServerSideProps } from 'next'
 import { useEffect, useState } from 'react'
-import { useAppContext } from '../../../../contexts/app'
-import { useApi } from '../../../../libs/useApi'
-import { Tenant } from '../../../../types/Tenant'
+import { useAppContext } from '../../../contexts/app'
+import { useApi } from '../../../libs/useApi'
+import { Tenant } from '../../../types/Tenant'
 import { getCookie } from 'cookies-next'
-import { User } from '../../../../types/User'
-import { useAuthContext } from '../../../../contexts/auth'
+import { User } from '../../../types/User'
+import { useAuthContext } from '../../../contexts/auth'
 import Head from 'next/head'
-import { Header } from '../../../components'
-import { InputField } from '../../../components/InputField'
-import { Button } from '../../../components/Button'
-import { useFormatter } from '../../../../libs/useFormatter'
-import { CartItem } from '../../../../types/CartItem'
+import { Header } from '../../components'
+import { InputField } from '../../components/InputField'
+import { Button } from '../../components/Button'
+import { useFormatter } from '../../../libs/useFormatter'
+import { CartItem } from '../../../types/CartItem'
 import { useRouter } from 'next/navigation'
-import { AddressProps } from '../../../../types/Address'
-import { AddressItem } from '../../../components/AddressItem'
+import { AddressProps } from '../../../types/Address'
+import { AddressItem } from '../../components/AddressItem'
 
-export default function Address(data: Props) {
+export default function MyAddress(data: Props) {
   const { setToken, setUser } = useAuthContext()
   const { tenant, setTenant, setShippingAddress, setShippingPrice } = useAppContext()
 

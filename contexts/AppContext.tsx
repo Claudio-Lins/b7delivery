@@ -1,6 +1,6 @@
-import { AppContextType } from 'next/dist/shared/lib/utils'
+
 import { createContext, useContext, useState } from 'react'
-import { Tenant } from '..//types/Tenant'
+import { Tenant } from '../types/Tenant'
 
 type appContextType = {
   tenant: Tenant | null

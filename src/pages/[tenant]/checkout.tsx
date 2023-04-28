@@ -99,7 +99,7 @@ export default function Checkout(data: Props) {
       <div className="flex flex-col gap-6 pb-10 pt-6">
         <div className="endereco flex flex-col">
           <span className="mb-2 font-semibold text-zinc-500">Endereço</span>
-          <Link href={`/${data?.tenant.slug}/address`}>
+          <Link href={`/${data?.tenant.slug}/my-addresses/`}>
           <ButtonIcom
             color={data.tenant.primaryColor}
             label={'Ok'}
