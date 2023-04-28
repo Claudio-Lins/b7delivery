@@ -27,7 +27,8 @@ export default function Address(data: Props) {
     setTenant(data?.tenant)
     setToken(data?.token)
     data?.user && setUser(data?.user)
-  }, [data?.tenant, data?.token, data?.user, setTenant, setToken, setUser])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   async function handleAddressSelect(address: AddressProps) {
     const price = await api.getShippingPrice(address)
