@@ -20,7 +20,6 @@ export default function Address(data: Props) {
   const { setToken, setUser } = useAuthContext()
   const { tenant, setTenant, setShippingAddress, setShippingPrice } = useAppContext()
 
-  const formatter = useFormatter()
   const route = useRouter()
   const api = useApi(data.tenant.slug)
 
@@ -28,7 +27,7 @@ export default function Address(data: Props) {
     setTenant(data?.tenant)
     setToken(data?.token)
     data?.user && setUser(data?.user)
-  }, [])
+  }, [data?.tenant, data?.token, data?.user, setTenant, setToken, setUser])
 
   async function handleAddressSelect(address: AddressProps) {
     const price = await api.getShippingPrice(address)
