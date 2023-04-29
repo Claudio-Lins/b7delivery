@@ -11,7 +11,7 @@ const Home: NextPage = () => {
           href={`
           /b7pizza
           `}
-          className="w-full max-w-xs rounded-md bg-[#6AB70A] p-4 text-center text-2xl font-bold shadow-sm hover:shadow-none hover:brightness-90"
+          className="w-full max-w-xs rounded-md bg-[#6AB70A] p-4 text-center font-Old text-2xl font-bold shadow-sm hover:shadow-none hover:brightness-90"
         >
           B7Pizza
         </Link>
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
           href={`
           /b7burger
           `}
-          className="w-full max-w-xs rounded-md bg-[#FB9400] p-4 text-center text-2xl font-bold shadow-sm hover:shadow-none hover:brightness-90"
+          className="w-full max-w-xs rounded-md bg-[#FB9400] p-4 text-center font-Old text-2xl font-bold shadow-sm hover:shadow-none hover:brightness-90"
         >
           B7Burger
         </Link>

@@ -6,17 +6,18 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        Inter: ['Inter', 'sans-serif'] 
+        Inter: ['Inter', 'sans-serif'],
+        Old: ['Old Standard TT', 'serif'],
       },
       colors: {
         brand: {
           300: '#996dff',
           500: '#8257e6',
-        }
+        },
       },
       backgroundImage: {
-        'bg-efeito': "url('/assets/bg-efeito.png')"
-      }
+        'bg-efeito': "url('/assets/bg-efeito.png')",
+      },
     },
   },
   plugins: [],
