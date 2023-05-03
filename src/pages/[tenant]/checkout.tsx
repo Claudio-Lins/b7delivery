@@ -263,7 +263,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // GET LOGGED USER
   const token = getCookie('token', context)
   const user = await api.authorizeToken(token as string)
-  console.log({ user })
+  
 
   // GET CART
   const cartCookie = getCookie('cart', context)
@@ -271,10 +271,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      tenant: JSON.parse(JSON.stringify(tenant)),
-      user: JSON.parse(JSON.stringify(user)),
+      tenant,
+      user,
       cart,
-      token,
+      token: token ?? null,
     },
   }
 }

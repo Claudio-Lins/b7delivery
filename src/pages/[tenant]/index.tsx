@@ -137,17 +137,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // GET LOGGED USER
   const token = getCookie('token', context)
   const user = await api.authorizeToken(token as string)
-  console.log({ user })
 
   // GET PRODUCTS
   const products = await api.getAllProducts()
 
   return {
     props: {
-      tenant: JSON.parse(JSON.stringify(tenant)),
-      products: JSON.parse(JSON.stringify(products)),
-      user: JSON.parse(JSON.stringify(user)),
-      token
+      tenant,
+      products,
+      user,
+      token: token ?? null,
     },
   }
 }

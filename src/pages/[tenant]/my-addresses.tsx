@@ -137,7 +137,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (!user) {
     return {
       redirect: {
-        destination: `/login`,
+        destination: `/${tenantSlug}/login`,
         permanent: false,
       },
     }
@@ -150,7 +150,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       tenant: JSON.parse(JSON.stringify(tenant)),
       user: JSON.parse(JSON.stringify(user)),
-      token,
+      token: token ?? null,
       addresses,
     },
   }
